@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feicui.dao.ProductMapper">
+	<!-- 插入 -->
+	<insert id="saveProduct" parameterType="com.feicui.model.Products">
+		insert into products
+		values(#{id},#{name},#{price},#{category},#{pnum},#{imgurl},#{description},#{state},#{cbtime})
+	</insert>
+	<!-- 删除 -->
+	<delete id="delProduct" parameterType="java.lang.String">
+		delete from products where id = #{id}
+	</delete>
+	<!-- 修改 -->
+	<update id="updateProduct" parameterType="com.feicui.model.Products">
+		update products set name = #{name},price = #{price},category=#{category},pnum = #{pnum},imgurl = #{imgurl},description = #{description},state = #{state},cbtime=#{cbtime}
+		where id = #{id}
+	</update>
+	<!-- 根据id查询 -->
+	<select id="findProductById" parameterType="java.lang.String" resultType="com.feicui.model.Products">
+		select * from products where id = #{id}
+	</select>
+	<!-- 查询所有 -->
+	<select id="findProductsList" resultType="com.feicui.model.Products">
+		select * from products
+	</select>
+	<!-- 根据类别查询 -->
+	<select id="findProductByType" parameterType="java.lang.String" resultType="com.feicui.model.Products">
+		select * from products where category = #{type}
+	</select>
+	<select id="findCount" resultType="java.lang.Integer">
+	select count(*) from products
+	</select>
+	<select id="findProductsListPage" resultType="com.feicui.model.Products" parameterType="com.feicui.model.PageBean">
+	select * from products limit #{pageNum},#{pageSize}
+	</select>
+	<select id="findCountByType" resultType="java.lang.Integer" parameterType="java.lang.String">
+	select count(*) from products where category = #{category}
+	</select>
+	<select id="findProductByTypePage" resultType="com.feicui.model.Products">
+	select * from products where category=#{param1} limit #{param2.pageNum},#{param2.pageSize}
+	</select>
+</mapper>

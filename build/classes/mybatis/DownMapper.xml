@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feicui.dao.DownMapper">
+<resultMap type="com.feicui.model.Down" id="downMap">
+<result column="name" property="name"/>
+<result column="price" property="price"/>
+<result column="category" property="category"/>
+<result column="pnum" property="pnum"/>
+<result column="description" property="description"/>
+<result column="cbtime" property="cbtime"/>
+<result column="num" property="num"/>
+</resultMap>
+	<!-- 插入 -->
+	<select id="findProductBuyNum" resultMap="downMap">
+	SELECT products.name name,products.price price,products.category category,products.pnum pnum,
+	products.description description,products.cbtime cbtime,sum(orderitem.buynum) num
+		FROM orderitem, products
+		WHERE products.id = orderitem.product_id
+		GROUP BY orderitem.product_id
+		ORDER BY num
+		DESC
+	</select>
+</mapper>
